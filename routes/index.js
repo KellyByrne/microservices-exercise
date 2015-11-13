@@ -19,7 +19,7 @@ router.get('/api/v1/memories', function(req, res, next) {
   pg.connect(conString, function(err, client, done) {
   	client.query('SELECT * FROM memories', function(err, result) {
     	done();
-    	res.json(result);
+    	res.json(result.rows);
   	});
 	});
 });
@@ -41,7 +41,7 @@ router.get('/api/v1/memories/:year', function(req, res, next) {
   pg.connect(conString, function(err, client, done) {
   	client.query('SELECT * FROM memories WHERE year=($1)',  [req.params.year], function(err, result) {
     	done();
-    	res.json(result);
+    	res.json(result.rows);
   	});
 	});
 });
