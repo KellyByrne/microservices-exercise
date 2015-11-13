@@ -2,8 +2,7 @@ var express = require('express');
 var router = express.Router();
 var pg = require('pg');
 var conString = process.env.DATABASE_URL || "postgres://@localhost/memoriesapp";
-
-// GET /api/v1/memories/years - returns a unique, sorted list of all of the years in the memories database
+var formatter = require('../lib/formatter.js')
 
 router.post('/api/v1/memories', function(req, res, next) {
   pg.connect(conString, function(err, client, done) {
@@ -19,9 +18,10 @@ router.get('/api/v1/memories', function(req, res, next) {
   pg.connect(conString, function(err, client, done) {
   	client.query('SELECT * FROM memories', function(err, result) {
     	done();
-    	res.json(result.rows);
-  	});
-	});
+      
+    	res.json(formatter.formatter(result.rows));
+	 });
+  });
 });
 
 router.get('/api/v1/memories/years', function(req, res, next) {
@@ -41,7 +41,7 @@ router.get('/api/v1/memories/:year', function(req, res, next) {
   pg.connect(conString, function(err, client, done) {
   	client.query('SELECT * FROM memories WHERE year=($1)',  [req.params.year], function(err, result) {
     	done();
-    	res.json(result.rows);
+    	res.json(formatter.formatter(result.rows));
   	});
 	});
 });
