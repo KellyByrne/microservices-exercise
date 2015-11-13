@@ -39,21 +39,14 @@ router.get('/api/v1/memories/years', function(req, res, next) {
 
 router.get('/api/v1/memories/:year', function(req, res, next) {
   pg.connect(conString, function(err, client, done) {
-  	client.query('SELECT * FROM memories WHERE year=' + req.params.year, function(err, result) {
+  	client.query('SELECT * FROM memories WHERE year=($1)',  [req.params.year], function(err, result) {
     	done();
     	res.json(result);
   	});
 	});
 });
 
-router.post('/api/v1/memories/delete', function(req, res, next) {
-  pg.connect(conString, function(err, client, done) {
-    client.query('DELETE * FROM memories WHERE id=' + req.params.id, function(err, result) {
-      done();
-      res.json(result);
-    });
-  });
-});
+
 
 
 
