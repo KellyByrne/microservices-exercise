@@ -46,6 +46,14 @@ router.get('/api/v1/memories/:year', function(req, res, next) {
 	});
 });
 
+router.post('/api/v1/memories/delete', function(req, res, next) {
+  pg.connect(conString, function(err, client, done) {
+    client.query('DELETE * FROM memories WHERE id=' + req.params.id, function(err, result) {
+      done();
+      res.json(result);
+    });
+  });
+});
 
 
 
