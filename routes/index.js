@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 var pg = require('pg');
-require('dotenv').load();
 var conString = process.env.DATABASE_URL || "postgres://@localhost/memoriesapp";
 
 // GET /api/v1/memories/years - returns a unique, sorted list of all of the years in the memories database
