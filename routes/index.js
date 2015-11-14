@@ -32,7 +32,7 @@ router.get('/api/v1/memories/years', function(req, res, next) {
     	for(var i=0; i<result.rows.length; i++) {
     		output.push(result.rows[i].year)
     	}
-    	res.json(output);
+    	res.json({links: {self: "g12-kelly-byrne-memories.cfapps.io/api/v1/memories/years"}, data: output});
   	});
 	});
 });
